@@ -1,14 +1,34 @@
 import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
-import Home from "../views/Home.vue";
+import AdminDashboard from "../views/AdminDashboard.vue";
+import AdminLogin from "../views/AdminLogin.vue";
 
 Vue.use(VueRouter);
 
 const routes: Array<RouteConfig> = [
   {
     path: "/",
-    name: "Home",
-    component: Home,
+    redirect: "/login",
+  },
+  {
+    path: "/login",
+    name: "AdminLogin",
+    component: AdminLogin,
+    meta: {
+      requiresAuth: true,
+      hideBasicComponents: true,
+      applyBackground: false,
+    },
+  },
+  {
+    path: "/dashboard",
+    name: "AdminDashboard",
+    component: AdminDashboard,
+    meta: {
+      requiresAuth: true,
+      hideBasicComponents: false,
+      applyBackground: false,
+    },
   },
 ];
 
