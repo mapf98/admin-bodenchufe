@@ -15,9 +15,14 @@
       <v-col class="amber darken-1">
         <div class="d-flex justify-center align-center my-2">
           <v-avatar color="teal" size="48" class="mr-5">
-            <img src="https://cdn.vuetifyjs.com/images/john.jpg" alt="John" />
+            <v-icon size="200" v-if="!agregado">mdi-account</v-icon>
+            <v-img
+              :src="userUrlPhoto == 'photo' ? placeHolcerImg : userUrlPhoto"
+              v-if="agregado"
+              :contain="userUrlPhoto == placeHolcerImg"
+            ></v-img>
           </v-avatar>
-          <p class="mb-0 white--text">Diego De Quintal</p>
+          <p class="mb-0 white--text">{{ this.userData.userName }}</p>
         </div>
       </v-col>
     </v-row>
@@ -76,7 +81,7 @@
     </v-row>
     <v-row>
       <v-col>
-        <v-btn text large block dark class="error" tile>Cerrar sesión</v-btn>
+        <v-btn text large block dark class="error" tile @click="signOut()">Cerrar sesión</v-btn>
       </v-col>
     </v-row>
   </v-navigation-drawer>
@@ -87,13 +92,18 @@ import Vue from "vue";
 import Component from "vue-class-component";
 
 @Component({})
-export default class AdminDashboard extends Vue {
+export default class AdminSidebar extends Vue {
   users = false;
   providers = false;
   products = false;
   inventory = false;
   transactions = false;
   config = false;
+  userData: any = {};
+  agregado = false;
+  placeHolcerImg =
+    "https://firebasestorage.googleapis.com/v0/b/bodenchufe-client.appspot.com/o/images%2Faplication%2FFotofinal.png?alt=media&token=d9d54e10-3ad2-4906-8986-890b38a27d38";
+  userUrlPhoto = "";
 
   goToUsers() {
     this.users = true;
@@ -153,6 +163,24 @@ export default class AdminDashboard extends Vue {
     this.transactions = false;
     this.config = true;
     console.log("Ir a configuración");
+  }
+
+  signOut() {
+    localStorage.clear();
+    this.$router.push("/login");
+  }
+
+  showImageIfExist() {
+    const userDataString: any = localStorage.getItem("userData");
+    this.userData = JSON.parse(userDataString);
+    this.userUrlPhoto = this.userData.userPhoto;
+    if (this.userUrlPhoto.length > 0) {
+      this.agregado = true;
+    }
+  }
+
+  mounted() {
+    this.showImageIfExist();
   }
 }
 </script>
