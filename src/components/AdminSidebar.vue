@@ -81,7 +81,9 @@
     </v-row>
     <v-row>
       <v-col>
-        <v-btn text large block dark class="error" tile @click="signOut()">Cerrar sesión</v-btn>
+        <v-btn text large block dark class="error" tile @click="signOut()"
+          >Cerrar sesión</v-btn
+        >
       </v-col>
     </v-row>
   </v-navigation-drawer>
