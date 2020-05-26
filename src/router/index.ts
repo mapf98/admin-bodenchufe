@@ -4,6 +4,7 @@ import AdminDashboard from "../views/AdminDashboard.vue";
 import AdminLogin from "../views/AdminLogin.vue";
 import AdminSignUp from "../views/AdminSignUp.vue";
 import NotFound from "../views/NotFound.vue";
+import AddPost from "../components/AddPost.vue";
 import { VueEasyJwt } from "vue-easy-jwt";
 const jwt = new VueEasyJwt();
 
@@ -33,6 +34,17 @@ const routes: Array<RouteConfig> = [
       hideBasicComponents: false,
       applyBackground: false,
     },
+    children: [
+      {
+        path: "addPost",
+        name: "AddPost",
+        component: AddPost,
+        meta: {
+          requiresAuth: true,
+          hideBasicComponents: false,
+        },
+      },
+    ],
   },
   {
     path: "/signup",
