@@ -25,6 +25,7 @@
             class="white--text"
             color="indigo"
             rounded
+            @click="goToSignUp()"
           >
             Register
           </v-btn>
@@ -50,6 +51,9 @@ import Login from "../components/Login.vue";
 export default class AdminLogin extends Vue {
   goToDashboard() {
     this.$router.push("/dashboard");
+  }
+  goToSignUp() {
+    this.$router.push("/signup");
   }
 }
 </script>
