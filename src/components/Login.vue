@@ -71,7 +71,6 @@ export default class NotFederatedLogin extends Vue {
   nflPassword = "Password";
   loading = false;
 
-  @Watch("errors")
   showErrors(errors: any) {
     this.errors = errors;
     this.snackbarError = true;
@@ -83,11 +82,13 @@ export default class NotFederatedLogin extends Vue {
 
     if (!this.user.userEmail) {
       this.errors.push(this.nflEmailRequired);
+      this.showErrors(this.errors);
       this.loading = false;
     }
 
     if (!this.user.userPassword) {
       this.errors.push(this.nflPasswordRequired);
+      this.showErrors(this.errors);
       this.loading = false;
     }
 
@@ -99,6 +100,7 @@ export default class NotFederatedLogin extends Vue {
           this.getStatus.registered == true
         ) {
           this.errors.push(this.nflInvalidMailOrAccount);
+          this.showErrors(this.errors);
         }
         if (
           this.getStatus.validated == false &&
@@ -106,6 +108,7 @@ export default class NotFederatedLogin extends Vue {
           this.getStatus.registered == true
         ) {
           this.errors.push(this.nflUserBlocked);
+          this.showErrors(this.errors);
         }
         if (
           this.getStatus.validated == false &&
@@ -113,9 +116,11 @@ export default class NotFederatedLogin extends Vue {
           this.getStatus.registered == false
         ) {
           this.errors.push(this.nflMailNotRegistered);
+          this.showErrors(this.errors);
         }
         if (this.getStatus.administrator == false) {
           this.errors.push("you are not administrator");
+          this.showErrors(this.errors);
         }
         if (this.errors.length == 0) {
           this.$router.push("/dashboard");
