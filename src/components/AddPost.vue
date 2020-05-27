@@ -41,7 +41,16 @@
           <v-row>
             <v-col cols="4">
               <div class="photoPreviews mb-4 d-flex justify-center pa-2">
-                <v-img :src="image1" contain height="200" width="200"></v-img>
+                <v-img
+                  :src="image1"
+                  contain
+                  height="200"
+                  width="200"
+                  v-if="image1 !== ``"
+                ></v-img>
+                <v-icon size="200" v-if="image1 == ``">
+                  mdi-file-image-outline
+                </v-icon>
               </div>
               <div class="d-flex justify-center d-flex justify-center">
                 <v-file-input
@@ -56,7 +65,16 @@
             </v-col>
             <v-col cols="4">
               <div class="photoPreviews mb-4 d-flex justify-center pa-2">
-                <v-img :src="image2" contain height="200" width="200"></v-img>
+                <v-img
+                  :src="image2"
+                  contain
+                  height="200"
+                  width="200"
+                  v-if="image2 !== ``"
+                ></v-img>
+                <v-icon size="200" v-if="image2 == ``">
+                  mdi-file-image-outline
+                </v-icon>
               </div>
               <div class="d-flex justify-center">
                 <v-file-input
@@ -73,7 +91,16 @@
             </v-col>
             <v-col cols="4">
               <div class="photoPreviews mb-4 d-flex justify-center pa-2">
-                <v-img :src="image3" contain height="200" width="200"></v-img>
+                <v-img
+                  :src="image3"
+                  contain
+                  height="200"
+                  width="200"
+                  v-if="image3 !== ``"
+                ></v-img>
+                <v-icon size="200" v-if="image3 == ``">
+                  mdi-file-image-outline
+                </v-icon>
               </div>
               <div class="d-flex justify-center">
                 <v-file-input
@@ -113,7 +140,7 @@
           <v-row>
             <v-col>
               <v-text-field
-                label="Longitud"
+                label="Long"
                 outlined
                 clearable
                 type="number"
@@ -125,7 +152,7 @@
             </v-col>
             <v-col>
               <v-text-field
-                label="Alto"
+                label="Height"
                 suffix="cm"
                 outlined
                 type="number"
@@ -137,7 +164,7 @@
             </v-col>
             <v-col>
               <v-text-field
-                label="Ancho"
+                label="Width"
                 suffix="cm"
                 outlined
                 type="number"
@@ -267,6 +294,18 @@
         </v-btn>
       </v-col>
     </v-row>
+    <v-snackbar
+      v-model="snackbar"
+      color="success"
+      class="mb-8 ml-8"
+      right
+      bottom
+    >
+      Post created successfully
+      <v-btn text @click="snackbar = false">
+        Close
+      </v-btn>
+    </v-snackbar>
   </v-container>
 </template>
 
@@ -277,6 +316,7 @@ import Component from "vue-class-component";
 @Component({})
 export default class AddPost extends Vue {
   newProduct = false;
+  snackbar = false;
   loadingProducts = true;
   loadingProviders = true;
   loadingOffers = true;
@@ -317,6 +357,7 @@ export default class AddPost extends Vue {
           product: this.selectedProduct.value,
         })
         .then(() => {
+          this.snackbar = true;
           this.loadingAdd = false;
           this.clearAll();
         });
@@ -361,6 +402,7 @@ export default class AddPost extends Vue {
               productId: response.data.product_id,
             })
             .then(() => {
+              this.snackbar = true;
               this.loadingAdd = false;
               this.clearAll();
             });
