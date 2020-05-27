@@ -1,13 +1,14 @@
 import Vue from "vue";
 import Vuex from "vuex";
 
-//Aqui se importan los modulos
-import users from "./modules/userModule";
+import logIn from "./modules/logInModule";
+import signUp from "./modules/SignUpModule";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   modules: {
-    users,
+    logIn,
+    signUp,
   },
 });
