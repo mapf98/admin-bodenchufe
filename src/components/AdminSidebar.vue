@@ -1,5 +1,5 @@
 <template>
-  <v-navigation-drawer absolute permanent color="indigo">
+  <v-navigation-drawer permanent color="indigo" app>
     <v-row>
       <v-col class="indigo lighten-4">
         <v-img
@@ -30,28 +30,28 @@
     <v-row>
       <v-col :class="users ? `white` : ``">
         <v-btn text large block :dark="!users" tile @click="goToUsers"
-          >Usuarios</v-btn
+          >Users</v-btn
         >
       </v-col>
     </v-row>
     <v-row>
       <v-col :class="providers ? `white` : ``">
         <v-btn text large block :dark="!providers" tile @click="goToProviders"
-          >Proveedores</v-btn
+          >Providers</v-btn
         >
       </v-col>
     </v-row>
     <v-row>
       <v-col :class="products ? `white` : ``">
         <v-btn text large block :dark="!products" tile @click="goToProducts"
-          >Productos</v-btn
+          >Posts</v-btn
         >
       </v-col>
     </v-row>
     <v-row>
       <v-col :class="inventory ? `white` : ``">
         <v-btn text large block :dark="!inventory" tile @click="goToInventory"
-          >Inventario</v-btn
+          >Inventory</v-btn
         >
       </v-col>
     </v-row>
@@ -64,7 +64,7 @@
           :dark="!transactions"
           tile
           @click="goToTransactions"
-          >Transacciones</v-btn
+          >Transactions</v-btn
         >
       </v-col>
     </v-row>
@@ -72,7 +72,7 @@
     <v-row>
       <v-col :class="config ? `white` : ``">
         <v-btn text large block :dark="!config" tile @click="goToConfig"
-          >Configuraciones
+          >Settings
           <v-icon class="ml-3">
             mdi-file-cog-outline
           </v-icon>
@@ -81,7 +81,9 @@
     </v-row>
     <v-row>
       <v-col>
-        <v-btn text large block dark class="error" tile @click="signOut()">Cerrar sesión</v-btn>
+        <v-btn text large block dark class="error" tile @click="signOut()"
+          >Log out</v-btn
+        >
       </v-col>
     </v-row>
   </v-navigation-drawer>
@@ -132,7 +134,7 @@ export default class AdminSidebar extends Vue {
     this.inventory = false;
     this.transactions = false;
     this.config = false;
-    console.log("Ir a productos");
+    this.$router.push("/dashboard/addPost");
   }
 
   goToInventory() {
