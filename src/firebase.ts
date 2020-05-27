@@ -4,7 +4,7 @@ import "firebase/auth";
 import "firebase/storage";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyASaIP-3ygQk1_GuRnrV0L7OeOW4f8P-6E",
+  apiKey: process.env.VUE_APP_FB_API_KEY,
   authDomain: "bodenchufe-client.firebaseapp.com",
   databaseURL: "https://bodenchufe-client.firebaseio.com",
   projectId: "bodenchufe-client",
