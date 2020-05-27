@@ -84,7 +84,23 @@ export default {
       });
     },
     createPost: async (context: any, payload: any) => {
-      await postService.createPost(payload);
+      const productId = await postService.createPost(payload);
+      return productId;
+    },
+    uploadPhotos: async (context: any, payload: any) => {
+      let setPhoto = false;
+      let newPhoto: any;
+      payload.photos.forEach(async (photo: any) => {
+        newPhoto = await uploadTaskPromise(payload.productId, photo);
+
+        if (setPhoto == false) {
+          await postService.updateProductPhoto({
+            productId: payload.productId,
+            photo: newPhoto,
+          });
+          setPhoto = true;
+        }
+      });
     },
     // update: (context, bankData) => {
     //   // stuff to update bank data to the backend : CRUD UPDATE ACTION

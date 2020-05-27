@@ -32,4 +32,12 @@ export default {
       },
     });
   },
+  updateProductPhoto(payload: any) {
+    console.log(payload);
+    return API_URL.put("/product/photo", payload, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+  },
 };

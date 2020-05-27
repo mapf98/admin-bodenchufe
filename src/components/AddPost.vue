@@ -40,7 +40,7 @@
         <v-card outlined class="pa-4" elevation="3">
           <v-row>
             <v-col cols="4">
-              <div class="photoPreviews mb-4 d-flex justify-center">
+              <div class="photoPreviews mb-4 d-flex justify-center pa-2">
                 <v-img :src="image1" contain height="200" width="200"></v-img>
               </div>
               <div class="d-flex justify-center d-flex justify-center">
@@ -55,7 +55,7 @@
               </div>
             </v-col>
             <v-col cols="4">
-              <div class="photoPreviews mb-4 d-flex justify-center">
+              <div class="photoPreviews mb-4 d-flex justify-center pa-2">
                 <v-img :src="image2" contain height="200" width="200"></v-img>
               </div>
               <div class="d-flex justify-center">
@@ -72,7 +72,7 @@
               </div>
             </v-col>
             <v-col cols="4">
-              <div class="photoPreviews mb-4 d-flex justify-center">
+              <div class="photoPreviews mb-4 d-flex justify-center pa-2">
                 <v-img :src="image3" contain height="200" width="200"></v-img>
               </div>
               <div class="d-flex justify-center">
@@ -304,21 +304,68 @@ export default class AddPost extends Vue {
 
   addNewPost() {
     this.loadingAdd = true;
-    this.$store
-      .dispatch("post/createPost", {
-        provider_id: this.selectedProvider.value,
-        provider_available_quantity: parseInt(this.inStockProducts),
-        provider_price: parseFloat(this.pricePerProduct),
-        provider_description: this.postDescription,
-        offer_rate:
-          this.selectedOffer === undefined ? null : this.selectedOffer.text,
-        new_product: this.newProduct,
-        product: this.selectedProduct.value,
-      })
-      .then(() => {
-        this.loadingAdd = false;
-        this.clearAll();
-      });
+    if (this.newProduct == false) {
+      this.$store
+        .dispatch("post/createPost", {
+          provider_id: this.selectedProvider.value,
+          provider_available_quantity: parseInt(this.inStockProducts),
+          provider_price: parseFloat(this.pricePerProduct),
+          provider_description: this.postDescription,
+          offer_rate:
+            this.selectedOffer === undefined ? null : this.selectedOffer.text,
+          new_product: this.newProduct,
+          product: this.selectedProduct.value,
+        })
+        .then(() => {
+          this.loadingAdd = false;
+          this.clearAll();
+        });
+    } else {
+      this.$store
+        .dispatch("post/createPost", {
+          provider_id: this.selectedProvider.value,
+          provider_available_quantity: parseInt(this.inStockProducts),
+          provider_price: parseFloat(this.pricePerProduct),
+          provider_description: this.postDescription,
+          offer_rate:
+            this.selectedOffer === undefined ? null : this.selectedOffer.text,
+          new_product: this.newProduct,
+          product: {
+            product_name: this.productName,
+            product_description: this.productDescription,
+            product_photo: "photo",
+            product_long: parseFloat(this.productLong),
+            product_height: parseFloat(this.productH),
+            product_width: parseFloat(this.productW),
+            category_name: this.selectedCategory.text,
+          },
+        })
+        .then((response: any) => {
+          const photos = [];
+
+          if (this.file1 !== undefined) {
+            photos.push(this.file1);
+          }
+
+          if (this.file2 !== undefined) {
+            photos.push(this.file2);
+          }
+
+          if (this.file3 !== undefined) {
+            photos.push(this.file3);
+          }
+
+          this.$store
+            .dispatch("post/uploadPhotos", {
+              photos: photos,
+              productId: response.data.product_id,
+            })
+            .then(() => {
+              this.loadingAdd = false;
+              this.clearAll();
+            });
+        });
+    }
   }
 
   previewImage1(event: any) {
@@ -421,14 +468,15 @@ export default class AddPost extends Vue {
           }
         } else if (
           this.newProduct == true &&
-          this.selectedCategory !== undefined &&
-          this.productDescription == null
+          this.selectedCategory.value !== undefined &&
+          this.productDescription !== null
         ) {
           if (
             this.image1 !== "" &&
             this.file1 !== undefined &&
             this.productName !== "" &&
-            this.productDescription !== "" &&
+            this.productDescription.length >= 50 &&
+            this.productDescription.length <= 500 &&
             parseFloat(this.productLong) > 0 &&
             parseFloat(this.productH) > 0 &&
             parseFloat(this.productW) > 0
