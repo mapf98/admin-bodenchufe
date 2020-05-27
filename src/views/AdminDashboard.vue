@@ -2,7 +2,7 @@
   <v-container fluid>
     <v-row>
       <v-col>
-        Hola, este es el dashboard
+        <router-view></router-view>
       </v-col>
     </v-row>
   </v-container>
