@@ -18,6 +18,13 @@ export default {
   getOffers() {
     return API_URL.get("/offer");
   },
+  getCategories() {
+    return API_URL.get("/category/all", {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+  },
   createPost(payload: any) {
     return API_URL.post("/product", payload, {
       headers: {

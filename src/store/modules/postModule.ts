@@ -1,5 +1,28 @@
 import Vue from "vue";
 import postService from "../../services/postService";
+import { fb } from "../../firebase";
+
+async function uploadTaskPromise(productId: any, imageFile: any) {
+  return new Promise(function (resolve, reject) {
+    const storageRef = fb
+      .storage()
+      .ref("images/products/" + productId + "/" + imageFile.name);
+    const uploadTask = storageRef.put(imageFile);
+
+    uploadTask.on(
+      "state_changed",
+      null,
+      (error) => {
+        reject(error);
+      },
+      async () => {
+        await uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+          resolve(downloadURL);
+        });
+      }
+    );
+  });
+}
 
 export default {
   namespaced: true,
@@ -9,6 +32,7 @@ export default {
     products: [],
     providers: [],
     offers: [],
+    categories: [],
   },
   // -----------------------------------------------------------------
   getters: {
@@ -16,6 +40,7 @@ export default {
     getProducts: (state: any) => state.products,
     getProviders: (state: any) => state.providers,
     getOffers: (state: any) => state.offers,
+    getCategories: (state: any) => state.categories,
   },
   // -----------------------------------------------------------------
   mutations: {
@@ -28,6 +53,9 @@ export default {
     },
     setOffers(state: any, offers: any) {
       Vue.set(state, "offers", offers);
+    },
+    setCategories(state: any, categories: any) {
+      Vue.set(state, "categories", categories);
     },
   },
   // -----------------------------------------------------------------
@@ -48,6 +76,11 @@ export default {
     getOffers: async (context: any) => {
       await postService.getOffers().then((response: any) => {
         context.commit("setOffers", response.data.offers);
+      });
+    },
+    getCategories: async (context: any) => {
+      await postService.getCategories().then((response: any) => {
+        context.commit("setCategories", response.data.categories);
       });
     },
     createPost: async (context: any, payload: any) => {

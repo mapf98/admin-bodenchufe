@@ -15,6 +15,15 @@
     </v-row>
     <v-row>
       <v-col>
+        <v-switch
+          v-model="newProduct"
+          label="New product"
+          color="indigo"
+        ></v-switch>
+      </v-col>
+    </v-row>
+    <v-row v-if="!newProduct">
+      <v-col>
         <v-autocomplete
           :loading="loadingProducts"
           :items="products"
@@ -24,6 +33,137 @@
           return-object
           label="Product"
         ></v-autocomplete>
+      </v-col>
+    </v-row>
+    <v-row v-if="newProduct">
+      <v-col>
+        <v-card outlined class="pa-4" elevation="3">
+          <v-row>
+            <v-col cols="4">
+              <div class="photoPreviews mb-4 d-flex justify-center">
+                <v-img :src="image1" contain height="200" width="200"></v-img>
+              </div>
+              <div class="d-flex justify-center d-flex justify-center">
+                <v-file-input
+                  accept="image/png, image/jpeg"
+                  placeholder="Select preview photo 1"
+                  prepend-icon="mdi-camera"
+                  dense
+                  outlined
+                  @change="previewImage1"
+                ></v-file-input>
+              </div>
+            </v-col>
+            <v-col cols="4">
+              <div class="photoPreviews mb-4 d-flex justify-center">
+                <v-img :src="image2" contain height="200" width="200"></v-img>
+              </div>
+              <div class="d-flex justify-center">
+                <v-file-input
+                  accept="image/png, image/jpeg"
+                  placeholder="Select preview photo 2"
+                  prepend-icon="mdi-camera"
+                  dense
+                  outlined
+                  hint="Optional"
+                  persistent-hint
+                  @change="previewImage2"
+                ></v-file-input>
+              </div>
+            </v-col>
+            <v-col cols="4">
+              <div class="photoPreviews mb-4 d-flex justify-center">
+                <v-img :src="image3" contain height="200" width="200"></v-img>
+              </div>
+              <div class="d-flex justify-center">
+                <v-file-input
+                  accept="image/png, image/jpeg"
+                  placeholder="Select preview photo 3"
+                  prepend-icon="mdi-camera"
+                  dense
+                  outlined
+                  hint="Optional"
+                  persistent-hint
+                  @change="previewImage3"
+                ></v-file-input>
+              </div>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col>
+              <v-text-field
+                label="Product name"
+                outlined
+                clearable
+                v-model="productName"
+              ></v-text-field>
+            </v-col>
+            <v-col>
+              <v-autocomplete
+                :loading="loadingCategories"
+                :items="categories"
+                v-model="selectedCategory"
+                outlined
+                clearable
+                return-object
+                label="Product category"
+              ></v-autocomplete>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col>
+              <v-text-field
+                label="Longitud"
+                outlined
+                clearable
+                type="number"
+                min="1"
+                max="9999"
+                v-model="productLong"
+                suffix="cm"
+              ></v-text-field>
+            </v-col>
+            <v-col>
+              <v-text-field
+                label="Alto"
+                suffix="cm"
+                outlined
+                type="number"
+                min="1"
+                max="9999"
+                v-model="productH"
+                clearable
+              ></v-text-field>
+            </v-col>
+            <v-col>
+              <v-text-field
+                label="Ancho"
+                suffix="cm"
+                outlined
+                type="number"
+                min="1"
+                max="9999"
+                v-model="productW"
+                clearable
+              ></v-text-field>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col>
+              <v-textarea
+                outlined
+                clearable
+                counter
+                rows="3"
+                auto-grow
+                v-model="productDescription"
+                label="Product description"
+                hint="Description between 50 and 500 characters"
+                persistent-hint
+              ></v-textarea>
+            </v-col>
+          </v-row>
+        </v-card>
       </v-col>
     </v-row>
     <v-row>
@@ -141,12 +281,26 @@ export default class AddPost extends Vue {
   loadingProviders = true;
   loadingOffers = true;
   loadingAdd = false;
+  loadingCategories = true;
+  selectedCategory: any = {};
   selectedProduct: any = {};
   selectedProvider: any = {};
   selectedOffer: any = {};
+  files: any = [];
   postDescription = "";
+  productDescription = "";
   pricePerProduct = "";
   inStockProducts = "";
+  productLong = "";
+  productH = "";
+  productW = "";
+  productName = "";
+  image1 = "";
+  image2 = "";
+  image3 = "";
+  file1 = undefined;
+  file2 = undefined;
+  file3 = undefined;
 
   addNewPost() {
     this.loadingAdd = true;
@@ -167,14 +321,74 @@ export default class AddPost extends Vue {
       });
   }
 
+  previewImage1(event: any) {
+    if (event) {
+      const file = event || event.dataTransfer.files;
+      this.file1 = file;
+      this.createImg(file, 1);
+    } else {
+      this.file1 = undefined;
+      this.image1 = "";
+    }
+  }
+
+  previewImage2(event: any) {
+    if (event) {
+      const file = event || event.dataTransfer.files;
+      this.file2 = file;
+      this.createImg(file, 2);
+    } else {
+      this.file2 = undefined;
+      this.image2 = "";
+    }
+  }
+
+  previewImage3(event: any) {
+    if (event) {
+      const file = event || event.dataTransfer.files;
+      this.file3 = file;
+      this.createImg(file, 3);
+    } else {
+      this.file3 = undefined;
+      this.image3 = "";
+    }
+  }
+
+  createImg(file: any, image: number) {
+    const reader = new FileReader();
+
+    reader.onload = (e: any) => {
+      if (image == 1) {
+        this.image1 = e.target.result;
+      } else if (image == 2) {
+        this.image2 = e.target.result;
+      } else {
+        this.image3 = e.target.result;
+      }
+    };
+    reader.readAsDataURL(file);
+  }
+
   clearAll() {
     this.newProduct = false;
-    this.selectedProduct = {};
+    this.selectedProduct = undefined;
     this.selectedProvider = {};
     this.selectedOffer = {};
     this.postDescription = "";
     this.pricePerProduct = "";
     this.inStockProducts = "";
+    this.selectedCategory = {};
+    this.productDescription = "";
+    this.productLong = "";
+    this.productH = "";
+    this.productW = "";
+    this.productName = "";
+    this.image1 = "";
+    this.image2 = "";
+    this.image3 = "";
+    this.file1 = undefined;
+    this.file2 = undefined;
+    this.file3 = undefined;
   }
 
   checkNumberTypes() {
@@ -189,18 +403,43 @@ export default class AddPost extends Vue {
   }
 
   checkPostInfo() {
-    if (this.postDescription == null) {
+    if (this.postDescription == null || this.selectedProvider === undefined) {
       return true;
     } else {
       if (
-        this.selectedProduct.value !== undefined &&
         this.selectedProvider.value !== undefined &&
         parseFloat(this.pricePerProduct) > 0 &&
         parseInt(this.inStockProducts) > 0 &&
         this.postDescription.length >= 50 &&
         this.postDescription.length <= 500
       ) {
-        return false;
+        if (this.newProduct == false && this.selectedProduct !== undefined) {
+          if (this.selectedProduct.value === undefined) {
+            return true;
+          } else {
+            return false;
+          }
+        } else if (
+          this.newProduct == true &&
+          this.selectedCategory !== undefined &&
+          this.productDescription == null
+        ) {
+          if (
+            this.image1 !== "" &&
+            this.file1 !== undefined &&
+            this.productName !== "" &&
+            this.productDescription !== "" &&
+            parseFloat(this.productLong) > 0 &&
+            parseFloat(this.productH) > 0 &&
+            parseFloat(this.productW) > 0
+          ) {
+            return false;
+          } else {
+            return true;
+          }
+        } else {
+          return true;
+        }
       } else {
         return true;
       }
@@ -216,6 +455,9 @@ export default class AddPost extends Vue {
     });
     this.$store.dispatch("post/getOffers").then(() => {
       this.loadingOffers = false;
+    });
+    this.$store.dispatch("post/getCategories").then(() => {
+      this.loadingCategories = false;
     });
   }
 
@@ -266,7 +508,27 @@ export default class AddPost extends Vue {
 
     return autocompleteOffers;
   }
+
+  get categories() {
+    const categories = this.$store.getters["post/getCategories"];
+    let autocompleteCategories: any = [];
+
+    if (categories.length !== undefined) {
+      categories.forEach((category: any) => {
+        autocompleteCategories.push({
+          text: category.category_name,
+          value: category.category_id,
+        });
+      });
+    }
+
+    return autocompleteCategories;
+  }
 }
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+.photoPreviews {
+  border: 1px solid black;
+}
+</style>
