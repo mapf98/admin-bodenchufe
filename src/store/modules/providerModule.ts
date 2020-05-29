@@ -1,4 +1,3 @@
-import Vue from "vue";
 import providerService from "../../services/providerService";
 
 export default {
