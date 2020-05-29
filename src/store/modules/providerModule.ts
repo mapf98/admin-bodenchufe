@@ -2,15 +2,11 @@ import providerService from "../../services/providerService";
 
 export default {
   namespaced: true,
-  // -----------------------------------------------------------------
   state: {
     providers: [],
   },
-  // -----------------------------------------------------------------
   getters: {},
-  // -----------------------------------------------------------------
   mutations: {},
-  // -----------------------------------------------------------------
   actions: {
     updatePost: async (context: any, payload: any) => {
       return await providerService.updatePost(payload);
