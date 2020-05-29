@@ -145,7 +145,6 @@
                 clearable
                 type="number"
                 min="1"
-                max="9999"
                 v-model="productLong"
                 suffix="cm"
               ></v-text-field>
@@ -157,7 +156,6 @@
                 outlined
                 type="number"
                 min="1"
-                max="9999"
                 v-model="productH"
                 clearable
               ></v-text-field>
@@ -169,7 +167,6 @@
                 outlined
                 type="number"
                 min="1"
-                max="9999"
                 v-model="productW"
                 clearable
               ></v-text-field>
@@ -185,7 +182,7 @@
                 auto-grow
                 v-model="productDescription"
                 label="Product description"
-                hint="Description between 50 and 500 characters"
+                hint="Description between 15 and 500 characters"
                 persistent-hint
               ></v-textarea>
             </v-col>
@@ -224,7 +221,6 @@
           clearable
           type="number"
           min="1"
-          max="1000"
           v-model="inStockProducts"
           prefix="Units:"
         ></v-text-field>
@@ -236,7 +232,6 @@
           outlined
           type="number"
           min="1"
-          max="1000"
           v-model="pricePerProduct"
           clearable
         ></v-text-field>
@@ -265,7 +260,7 @@
           auto-grow
           v-model="postDescription"
           label="Post description"
-          hint="Description between 50 and 500 characters"
+          hint="Description between 15 and 500 characters"
           persistent-hint
         ></v-textarea>
       </v-col>
@@ -499,7 +494,7 @@ export default class AddPost extends Vue {
         this.selectedProvider.value !== undefined &&
         parseFloat(this.pricePerProduct) > 0 &&
         parseInt(this.inStockProducts) > 0 &&
-        this.postDescription.length >= 50 &&
+        this.postDescription.length >= 15 &&
         this.postDescription.length <= 500
       ) {
         if (this.newProduct == false && this.selectedProduct !== undefined) {
@@ -517,7 +512,7 @@ export default class AddPost extends Vue {
             this.image1 !== "" &&
             this.file1 !== undefined &&
             this.productName !== "" &&
-            this.productDescription.length >= 50 &&
+            this.productDescription.length >= 15 &&
             this.productDescription.length <= 500 &&
             parseFloat(this.productLong) > 0 &&
             parseFloat(this.productH) > 0 &&
