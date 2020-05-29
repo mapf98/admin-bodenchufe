@@ -8,7 +8,7 @@ module.exports = {
     appleMobileWebAppStatusBarStyle: "black",
 
     // configure the workbox plugin
-    workboxPluginMode: "GenerateSW"
+    workboxPluginMode: "GenerateSW",
     //workboxPluginMode: "InjectManifest",
     // workboxOptions: {
     //   // swSrc is required in InjectManifest mode.
@@ -23,5 +23,5 @@ module.exports = {
     // $) Abrimos en la url proporcionada y probamos
 
     //IMPORTANTE, EN ESTOS CASOS REVISAR SE GUARDA EL CACHE, SI HAY PROBLEMAS SE DEBE BORRAR EL CACHE DEL NAVEGADOR!
-  }
+  },
 };
