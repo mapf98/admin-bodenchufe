@@ -5,7 +5,7 @@ import AdminLogin from "../views/AdminLogin.vue";
 import AdminSignUp from "../views/AdminSignUp.vue";
 import NotFound from "../views/NotFound.vue";
 import AddPost from "../components/AddPost.vue";
-import Provider from "../components/Provider.vue"
+import Provider from "../components/Provider.vue";
 import Welcome from "../components/Welcome.vue";
 
 import { VueEasyJwt } from "vue-easy-jwt";
