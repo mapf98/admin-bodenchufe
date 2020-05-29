@@ -5,7 +5,9 @@ import AdminLogin from "../views/AdminLogin.vue";
 import AdminSignUp from "../views/AdminSignUp.vue";
 import NotFound from "../views/NotFound.vue";
 import AddPost from "../components/AddPost.vue";
+import Provider from "../components/Provider.vue"
 import Welcome from "../components/Welcome.vue";
+
 import { VueEasyJwt } from "vue-easy-jwt";
 const jwt = new VueEasyJwt();
 
@@ -49,6 +51,15 @@ const routes: Array<RouteConfig> = [
         path: "welcome",
         name: "Welcome",
         component: Welcome,
+        meta: {
+          requiresAuth: true,
+          hideBasicComponents: false,
+        },
+      },
+      {
+        path: "provider",
+        name: "Provider",
+        component: Provider,
         meta: {
           requiresAuth: true,
           hideBasicComponents: false,

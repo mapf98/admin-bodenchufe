@@ -139,7 +139,7 @@ export default class AdminSidebar extends Vue {
     this.inventory = false;
     this.transactions = false;
     this.config = false;
-    console.log("Ir a proveedores");
+    this.$router.push("/dashboard/provider");
   }
 
   goToProducts() {
