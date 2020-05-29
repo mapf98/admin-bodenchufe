@@ -49,7 +49,6 @@
 <script lang="ts">
 import Vue from "vue";
 import Component from "vue-class-component";
-import { Watch } from "vue-property-decorator";
 
 @Component({})
 export default class NotFederatedLogin extends Vue {
@@ -123,7 +122,7 @@ export default class NotFederatedLogin extends Vue {
           this.showErrors(this.errors);
         }
         if (this.errors.length == 0) {
-          this.$router.push("/dashboard");
+          this.$router.push("/dashboard/welcome");
         } else {
           this.showErrors(this.errors);
           this.loading = false;

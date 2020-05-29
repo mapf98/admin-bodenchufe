@@ -249,7 +249,7 @@
           outlined
           clearable
           return-object
-          label="Offer rate"
+          label="Discount"
           hint="Optional"
           persistent-hint
         ></v-autocomplete>
