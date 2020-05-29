@@ -232,7 +232,7 @@ export default class AdminSingUp extends Vue {
             this.showErrors(this.errors);
           } else {
             this.loading = false;
-            this.$router.push("/dashboard");
+            this.$router.push("/dashboard/welcome");
           }
         });
     } else {

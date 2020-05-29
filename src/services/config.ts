@@ -1,13 +1,11 @@
 import axios from "axios";
 
 export const API_URL = axios.create({
-  baseURL: "http://localhost:3000/bodenchufe/api",
+  baseURL: process.env.VUE_APP_API_URL_IP,
   withCredentials: false, // This is the default
   headers: {
     Accept: "application/json",
     "Content-Type": "application/json",
   },
-  timeout: 10000,
+  timeout: 30000,
 });
-
-export default API_URL;

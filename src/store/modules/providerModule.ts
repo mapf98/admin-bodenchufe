@@ -1,19 +1,12 @@
-import Vue from "vue";
 import providerService from "../../services/providerService";
 
 export default {
   namespaced: true,
-  // -----------------------------------------------------------------
   state: {
     providers: [],
   },
-  // -----------------------------------------------------------------
-  getters: {
-  },
-  // -----------------------------------------------------------------
-  mutations: {
-  },
-  // -----------------------------------------------------------------
+  getters: {},
+  mutations: {},
   actions: {
     updatePost: async (context: any, payload: any) => {
       return await providerService.updatePost(payload);
@@ -24,7 +17,7 @@ export default {
     updateProviderStatus: async (context: any, payload: any) => {
       return await providerService.updateProviderStatus(payload);
     },
-    createProvider:  async (context: any, payload: any) => {
+    createProvider: async (context: any, payload: any) => {
       return await providerService.createProvider(payload);
     },
   },
