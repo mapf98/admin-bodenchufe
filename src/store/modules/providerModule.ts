@@ -1,4 +1,3 @@
-import Vue from "vue";
 import providerService from "../../services/providerService";
 
 export default {
@@ -8,11 +7,9 @@ export default {
     providers: [],
   },
   // -----------------------------------------------------------------
-  getters: {
-  },
+  getters: {},
   // -----------------------------------------------------------------
-  mutations: {
-  },
+  mutations: {},
   // -----------------------------------------------------------------
   actions: {
     updatePost: async (context: any, payload: any) => {
@@ -24,7 +21,7 @@ export default {
     updateProviderStatus: async (context: any, payload: any) => {
       return await providerService.updateProviderStatus(payload);
     },
-    createProvider:  async (context: any, payload: any) => {
+    createProvider: async (context: any, payload: any) => {
       return await providerService.createProvider(payload);
     },
   },
