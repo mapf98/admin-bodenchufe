@@ -29,7 +29,7 @@
     <v-divider class="my-10 amber"></v-divider>
     <v-row>
       <v-col :class="users ? `white` : ``">
-        <v-btn text large block :dark="!users" tile @click="goToUsers"
+        <v-btn disabled text large block :dark="!users" tile @click="goToUsers"
           >Users</v-btn
         >
       </v-col>
@@ -50,14 +50,22 @@
     </v-row>
     <v-row>
       <v-col :class="inventory ? `white` : ``">
-        <v-btn text large block :dark="!inventory" tile @click="goToInventory"
-          >Inventory</v-btn
+        <v-btn
+          disabled
+          text
+          large
+          block
+          :dark="!inventory"
+          tile
+          @click="goToInventory"
+          >Categories</v-btn
         >
       </v-col>
     </v-row>
     <v-row>
       <v-col :class="transactions ? `white` : ``">
         <v-btn
+          disabled
           text
           large
           block
@@ -71,7 +79,14 @@
     <v-divider class="my-10 amber"></v-divider>
     <v-row>
       <v-col :class="config ? `white` : ``">
-        <v-btn text large block :dark="!config" tile @click="goToConfig"
+        <v-btn
+          disabled
+          text
+          large
+          block
+          :dark="!config"
+          tile
+          @click="goToConfig"
           >Settings
           <v-icon class="ml-3">
             mdi-file-cog-outline
